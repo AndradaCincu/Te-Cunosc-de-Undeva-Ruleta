@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+           body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url("bk.jpg");
+            background-size: 1899px; /* Dark background color */
+            color: #fafafa; /* Text color */
+        }
+
+        #photo-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+            height: 600px;
+            width: 450px;
+            border: 5px solid #0000;
+            border-radius: 12px;
+            background: linear-gradient(#131219, #131219) padding-box, linear-gradient(
+                    var(--angle),
+                    #e21818,
+                    #0015b1
+                ) border-box;
+            animation: 8s rotate linear infinite;
+            
+        }
+        @keyframes rotate {
+        to {
+            --angle: 360deg;
+        }}
+
+        @property --angle {
+        syntax: "<angle>";
+        initial-value: 0deg;
+        inherits: false;
+        }
+  
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .button {
+  display: flex;
+  position: relative;
+  background: none;
+  border: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(45deg)rotateZ(45deg);
+  cursor: pointer;
+  left:690px; top:10px; 
+
+
+}
+
+.button > .red {
+  position: absolute;
+  width: 10em;
+  height: 10em;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  background: rgb(63,94,251);
+background: radial-gradient(circle, rgb(128, 143, 220) 0%, rgb(220, 7, 49) 100%);
+  transform: translate(-50%,-50%);
+  transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.red::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1em;
+  left: 0;
+  background: rgb(63,94,251);
+background: radial-gradient(circle, rgb(132, 145, 206) 0%, rgb(235, 0, 47) 100%);
+  transform: rotateZ(-45deg) translateY(-.5em);
+  transition: height 150ms, transform 150ms;
+}
+
+.red::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  background: rgb(63,94,251);
+background: radial-gradient(circle, rgb(121, 137, 216) 0%, rgb(225, 2, 47) 100%);
+  transform: rotateZ(-45deg) translateY(-1em);
+  transition: transform 150ms;
+  border: 1px solid rgb(255, 196, 196);
+}
+
+.button > .base {
+  position: relative;
+  width: 10em;
+  height: 10em;
+  background-image: linear-gradient(to right, #f83600 0%, #f9d423 100%);  transform-style: preserve-3d;
+  border-bottom: 1px solid rgb(0, 0, 0);
+  border-right: 1px solid rgb(0, 0, 0);
+}
+
+.base::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(to right, #f83600 0%, #f9d423 100%);  transform-origin: bottom;
+  transform: rotateX(90deg);
+  border-right: 1px solid #000000;
+}
+
+.base::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(to right, #f83600 0%, #f9d423 100%);
+  transform-origin: right;
+  transform: rotateY(-90deg);
+  border-left: 1px solid #000000;
+}
+
+.button:active>.red::before {
+  transform: rotateZ(-45deg) translateY(0);
+  height: 0;
+}
+
+.button:active>.red::after {
+  transform: rotateZ(-45deg) translateY(0);
+}
+
+
+
+
+        audio {
+            display: none;
+        }
+    </style>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var photoFolder = "C:/Users/andra/Desktop/New folder/";
+            var photoAndMusic = [
+                { photo: "1.jpg", music: "Ionut Cercel - Made in Romania.mp3" },
+                { photo: "2.jpeg", music: "LIVE FLORIN SALAM - DE-AR FI SA-TI FAC UN PORTRET -  NEW BY SoundEmpire2015.mp3" },
+                { photo: "3.jpg", music: "Petrica Mitu Stoian   Coace Doamne prunele.mp3" },
+                { photo: "4.jpg", music: "Puya - Undeva-n Balkani  Videoclip Oficial HQ.mp3" },
+                { photo: "5.jpg", music: "Alex Velea - Minim doi [Official video HD].mp3" },
+                { photo: "7.jpg", music: "Gloria Gaynor - I Will Survive.mp3" },
+                { photo: "8.jpeg", music: "Leo de la Rosiori - Am tras draperiile (LIVE) 2023.mp3" },
+                { photo: "9.jpg", music: "Loredana - Apa (ft. Cabron) (Official Video).mp3" },
+                { photo: "10.jpg", music: "Reli Gherghescu - Ai sa ma cauti peste ani [ Album 2016 ].mp3" },
+                { photo: "11.jpg", music: "The Black Eyed Peas - My Humps.mp3" },
+                { photo: "12.jpg", music: "UDDI - Aseara ti-am luat basma (Official Video) by Famous Production.mp3" },
+                { photo: "13.png", music: "Viorica si Ionita din Clejani  - Bobarlica.mp3" },
+                { photo: "14.jpeg", music: "Bruno Mars - When I Was Your Man (Official Music Video).mp3" },
+                { photo: "15.jpg", music: "Fergie - Big Girls Don't Cry (Personal) (Official Music Video).mp3" },
+                { photo: "16.jpg", music: "Britney Spears - ...Baby One More Time (Official Video).mp3" },
+                { photo: "17.jpg", music: "P!nk - So What (Official Video).mp3" },
+                { photo: "18.jpg", music: "PSY - GANGNAM STYLE(강남스타일) MV.mp3" },
+                { photo: "19.jpg", music: "Michael Jackson - Smooth Criminal (Lyrics).mp3" },
+                { photo: "20.jpeg", music: "Silentó - Watch Me (WhipNae Nae) (Official).mp3" },
+                { photo: "21.jpg", music: "Sean Kingston - Beautiful Girls (Official HD Video).mp3" },
+                { photo: "22.jpg", music: "Outkast - Hey Ya! (Lyrics).mp3" },
+                { photo: "23.jpg", music: "Naughty Boy, Sam Smith - La la la (Lyrics).mp3" },
+                { photo: "24.jpg", music: "Stromae - Papaoutai (lyrics).mp3" },
+                { photo: "25.jpg", music: "Indila - Dernière Danse (Clip Officiel).mp3" },
+                { photo: "26.jpg", music: "Santana - Maria Maria (Official Video) ft. The Product G&B.mp3" },
+                { photo: "27.jpg", music: "Khaled - Aicha.mp3" },
+                { photo: "28.jpeg", music: "Mariah Carey - All I Want for Christmas Is You (Make My Wish Come True Edition).mp3 "},
+                { photo: "29.jpeg", music: "AMI - Trumpet Lights (official video HD).mp3" },
+                { photo: "30.jpeg", music: "Connect-R - Burning Love  Official Video.mp3" },
+                { photo: "31.jpeg", music: "Bole Chudiyan.mp3" },
+                { photo: "32.jpeg", music: "Taraf de Caliu  Am cartofi, dar n-am ulei (@Politică şi delicateţuri).mp3" },
+                { photo: "33.jpeg", music: "Lara Fabian - Je T'aime  paroles.mp3" },
+                { photo: "34.jpeg", music: "Queen - Another One Bites The Dust [Lyrics].mp3" },
+                { photo: "35.jpeg", music: "KING AFRICA _BOMBA_.mp3" },
+                { photo: "36.jpeg", music: "Boney M. - Daddy Cool (Sopot Festival 1979).mp3" },
+                { photo: "37.jpeg", music: "حسين الجسمي - بشرة خير (فيديو كليب)  Hussain Al Jassmi - Boshret Kheir  2014.mp3" },
+                { photo: "38.jpeg", music: "Roxana Printesa feat. Nicolae Guta - Zana Mea Official Video 2011.mp3" },
+                { photo: "39.jpeg", music: "Justin Bieber - Baby ft. Ludacris.mp3" },
+                { photo: "40.jpeg", music: "BENONE SINULESCU - ROATA VIETII.mp3" },
+                { photo: "41.jpeg", music: "Ileana Sararoiu   O batrana intr o gara.mp3" },
+                { photo: "42.jpeg", music: "Eminem - Love The Way You Lie ft. Rihanna.mp3" }
+                   
+             
+            ];
+
+            var display = document.getElementById("photo-display");
+            var button = document.getElementById("start-button");
+            var audio = document.getElementById("background-music");
+
+            button.addEventListener("click", startSlideshow);
+
+            function startSlideshow() {
+                var startTime = new Date().getTime();
+                var endTime = startTime + 20000; // 15 seconds
+
+                function displayRandomPhoto() {
+                    var currentTime = new Date().getTime();
+                    if (currentTime < endTime) {
+                        var randomIndex = Math.floor(Math.random() * photoAndMusic.length);
+                        var randomItem = photoAndMusic[randomIndex];
+                        display.innerHTML = `<img src="${photoFolder}${randomItem.photo}" alt="">`;
+                        setTimeout(displayRandomPhoto, 100); // Change photo every 0.3 seconds
+                    } else {
+                        // Display a specific photo after 15 seconds
+                        var finalIndex = Math.floor(Math.random() * photoAndMusic.length);
+                        var finalItem = photoAndMusic[finalIndex];
+                        display.innerHTML = `<img src="${photoFolder}${finalItem.photo}" alt="Final Photo">`;
+                        audio.src = finalItem.music; // Set the background music source
+                        audio.play(); // Start playing the background music
+                    }
+                }
+
+                displayRandomPhoto();
+            }
+        });
+    </script>
+</head>
+<body>
+    <div id="photo-display"></div>
+    <button id="start-button" class="button">
+        <span class="base"></span>
+        <span class="red"></span>
+    </button>
+   
+    <audio id="background-music" loop>
+        Your browser does not support the audio element.
+    </audio>
+
+</body>
+</html>
